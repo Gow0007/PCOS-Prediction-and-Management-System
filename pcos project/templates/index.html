@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCOS Companion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>PCOS Companion</h1>
+            <p>Your personalized tool for understanding and managing PCOS</p>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#about">About PCOS</a></li>
+            <li><a href="#predictor">PCOS Predictor</a></li>
+            <li><a href="#cycle-tracker">Cycle Tracker</a></li>
+            <li><a href="#mood-tracker">Mood Tracker</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="about" class="section animated">
+            <h2>About PCOS</h2>
+            <div class="card">
+                <h3>What is PCOS?</h3>
+                <p>Polycystic Ovary Syndrome (PCOS) is a hormonal disorder common among women of reproductive age. Women with PCOS may have infrequent or prolonged menstrual periods or excess male hormone (androgen) levels. The ovaries may develop numerous small collections of fluid (follicles) and fail to regularly release eggs.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Symptoms</h3>
+                <ul>
+                    <li>Irregular periods</li>
+                    <li>Excess hair growth</li>
+                    <li>Acne</li>
+                    <li>Weight gain</li>
+                    <li>Thinning hair</li>
+                    <li>Darkening of skin</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>Causes</h3>
+                <p>The exact cause of PCOS isn't known, but factors that might play a role include:</p>
+                <ul>
+                    <li><strong>Excess insulin:</strong> Insulin resistance might increase androgen production.</li>
+                    <li><strong>Low-grade inflammation:</strong> This may stimulate polycystic ovaries to produce androgens.</li>
+                    <li><strong>Heredity:</strong> PCOS often runs in families.</li>
+                    <li><strong>Excess androgen:</strong> The ovaries produce abnormally high levels of androgen.</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>Management</h3>
+                <p>While there's no cure for PCOS, symptoms can be managed through:</p>
+                <ul>
+                    <li>Lifestyle changes (diet and exercise)</li>
+                    <li>Medications to regulate hormones</li>
+                    <li>Treatments for specific symptoms like acne or hair growth</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="predictor" class="section animated">
+            <h2>PCOS Predictor</h2>
+            <p>Fill in your information below to assess your PCOS risk. This tool uses machine learning to analyze patterns in your symptoms and health metrics.</p>
+            
+            <form action="/predict" method="post" class="grid">
+                <!-- Basic Information -->
+                <div class="form-group">
+                    <label for="Age">Age (years)</label>
+                    <input type="number" id="Age" name="Age" min="15" max="50" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Weight">Weight (kg)</label>
+                    <input type="number" id="Weight" name="Weight" min="30" max="150" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Height">Height (cm)</label>
+                    <input type="number" id="Height" name="Height" min="140" max="200" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="BMI">BMI</label>
+                    <input type="number" id="BMI" name="BMI" min="15" max="50" step="0.1" required>
+                </div>
+                
+                <!-- Physical Measurements -->
+                <div class="form-group">
+                    <label for="PulseRate">Pulse Rate (bpm)</label>
+                    <input type="number" id="PulseRate" name="PulseRate" min="40" max="120" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="RR">Respiratory Rate (breaths/min)</label>
+                    <input type="number" id="RR" name="RR" min="10" max="30" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Hb">Hemoglobin (g/dL)</label>
+                    <input type="number" id="Hb" name="Hb" min="8" max="16" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Cycle">Cycle Regularity (0=Regular, 1=Irregular)</label>
+                    <input type="number" id="Cycle" name="Cycle" min="0" max="1" required>
+                </div>
+                
+                <!-- Reproductive Health -->
+                <div class="form-group">
+                    <label for="MarriageStatus">Marriage Status (Years)</label>
+                    <input type="number" id="MarriageStatus" name="MarriageStatus" min="0" max="20" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Pregnant">Times Pregnant</label>
+                    <input type="number" id="Pregnant" name="Pregnant" min="0" max="10" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="NoOfAbortions">Number of Abortions</label>
+                    <input type="number" id="NoOfAbortions" name="NoOfAbortions" min="0" max="10" required>
+                </div>
+                
+                <!-- Hormone Levels -->
+                <div class="form-group">
+                    <label for="FSH">FSH (mIU/mL)</label>
+                    <input type="number" id="FSH" name="FSH" min="0" max="20" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="LH">LH (mIU/mL)</label>
+                    <input type="number" id="LH" name="LH" min="0" max="20" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="FSH_LH_ratio">FSH/LH Ratio</label>
+                    <input type="number" id="FSH_LH_ratio" name="FSH_LH_ratio" min="0" max="10" step="0.01" required>
+                </div>
+                
+                <!-- Body Measurements -->
+                <div class="form-group">
+                    <label for="Hip">Hip (inches)</label>
+                    <input type="number" id="Hip" name="Hip" min="20" max="60" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Waist">Waist (inches)</label>
+                    <input type="number" id="Waist" name="Waist" min="20" max="60" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="WaistHipRatio">Waist:Hip Ratio</label>
+                    <input type="number" id="WaistHipRatio" name="WaistHipRatio" min="0.5" max="1.5" step="0.01" required>
+                </div>
+                
+                <!-- Thyroid and Other Hormones -->
+                <div class="form-group">
+                    <label for="TSH">TSH (mIU/L)</label>
+                    <input type="number" id="TSH" name="TSH" min="0" max="20" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="AMH">AMH (ng/mL)</label>
+                    <input type="number" id="AMH" name="AMH" min="0" max="20" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="PRL">PRL (ng/mL)</label>
+                    <input type="number" id="PRL" name="PRL" min="0" max="100" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="VitD3">Vitamin D3 (ng/mL)</label>
+                    <input type="number" id="VitD3" name="VitD3" min="0" max="100" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="PRG">PRG (ng/mL)</label>
+                    <input type="number" id="PRG" name="PRG" min="0" max="20" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="RBS">RBS (mg/dL)</label>
+                    <input type="number" id="RBS" name="RBS" min="50" max="200" required>
+                </div>
+                
+                <!-- Symptoms -->
+                <div class="form-group">
+                    <label for="WeightGain">Weight Gain (0=No, 1=Yes)</label>
+                    <input type="number" id="WeightGain" name="WeightGain" min="0" max="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="HairGrowth">Hair Growth (0=No, 1=Yes)</label>
+                    <input type="number" id="HairGrowth" name="HairGrowth" min="0" max="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="SkinDarkening">Skin Darkening (0=No, 1=Yes)</label>
+                    <input type="number" id="SkinDarkening" name="SkinDarkening" min="0" max="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="HairLoss">Hair Loss (0=No, 1=Yes)</label>
+                    <input type="number" id="HairLoss" name="HairLoss" min="0" max="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Pimples">Pimples (0=No, 1=Yes)</label>
+                    <input type="number" id="Pimples" name="Pimples" min="0" max="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="FastFood">Fast Food Consumption (0=No, 1=Yes)</label>
+                    <input type="number" id="FastFood" name="FastFood" min="0" max="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="RegExercise">Regular Exercise (0=No, 1=Yes)</label>
+                    <input type="number" id="RegExercise" name="RegExercise" min="0" max="1" required>
+                </div>
+                
+                <!-- Blood Pressure -->
+                <div class="form-group">
+                    <label for="BPSystolic">BP Systolic (mmHg)</label>
+                    <input type="number" id="BPSystolic" name="BPSystolic" min="80" max="200" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="BPDiastolic">BP Diastolic (mmHg)</label>
+                    <input type="number" id="BPDiastolic" name="BPDiastolic" min="50" max="120" required>
+                </div>
+                
+                <!-- Follicle Information -->
+                <div class="form-group">
+                    <label for="FollicleNoL">Follicle No. Left</label>
+                    <input type="number" id="FollicleNoL" name="FollicleNoL" min="0" max="30" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="FollicleNoR">Follicle No. Right</label>
+                    <input type="number" id="FollicleNoR" name="FollicleNoR" min="0" max="30" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="AvgFSizeL">Avg. Follicle Size Left (mm)</label>
+                    <input type="number" id="AvgFSizeL" name="AvgFSizeL" min="0" max="30" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="AvgFSizeR">Avg. Follicle Size Right (mm)</label>
+                    <input type="number" id="AvgFSizeR" name="AvgFSizeR" min="0" max="30" step="0.1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Endometrium">Endometrium (mm)</label>
+                    <input type="number" id="Endometrium" name="Endometrium" min="0" max="20" step="0.1" required>
+                </div>
+                
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <button type="submit">Assess PCOS Risk</button>
+                </div>
+            </form>
+            
+            {% if prediction_text %}
+            <div id="prediction-result" class="result {{ result_class }}">
+                <h3>Assessment Result</h3>
+                <p>{{ prediction_text }}</p>
+            </div>
+            {% endif %}
+        </section>
+        
+        <section id="cycle-tracker" class="section animated">
+            <h2>Cycle Tracker</h2>
+            <p>Track your menstrual cycles to identify patterns and predict future periods and ovulation.</p>
+            
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="track-cycle">Track Cycle</button>
+                    <button class="tab-button" data-tab="view-history">View History</button>
+                    <button class="tab-button" data-tab="predictions">Predictions</button>
+                </div>
+                
+                <div id="track-cycle" class="tab-content active">
+                    <form action="/track_cycle" method="post">
+                        <div class="form-group">
+                            <label for="cycle_date">Date of Last Period</label>
+                            <input type="date" id="cycle_date" name="cycle_date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cycle_notes">Notes (optional)</label>
+                            <textarea id="cycle_notes" name="cycle_notes" rows="3" placeholder="Any symptoms, flow intensity, etc."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-accent">Track Cycle</button>
+                    </form>
+                    
+                    {% if cycle_message %}
+                    <div class="result info-message">
+                        <p>{{ cycle_message }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div id="view-history" class="tab-content">
+                    <h3>Cycle History</h3>
+                    {% if session.cycle_data %}
+                    <div class="timeline">
+                        {% for entry in session.cycle_data %}
+                        <div class="timeline-item {% if loop.index % 2 == 0 %}right{% else %}left{% endif %}">
+                            <div class="timeline-content">
+                                <h4>{{ entry.date }}</h4>
+                                {% if entry.notes %}
+                                <p>{{ entry.notes }}</p>
+                                {% else %}
+                                <p>No notes recorded</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>No cycle data recorded yet.</p>
+                    {% endif %}
+                </div>
+                
+                <div id="predictions" class="tab-content">
+                    <h3>Cycle Predictions</h3>
+                    {% if session.cycle_data and last_date %}
+                        <div class="card">
+                            <h4>Next Period</h4>
+                            <p>Expected around: <strong>{{ (last_date|to_datetime + timedelta(days=28)).strftime('%B %d, %Y') }}</strong></p>
+                        </div>
+                        
+                        <div class="card">
+                            <h4>Ovulation</h4>
+                            <p>Expected around: <strong>{{ (last_date|to_datetime + timedelta(days=14)).strftime('%B %d, %Y') }}</strong></p>
+                        </div>
+                    {% else %}
+                        <p>Record at least one cycle to see predictions.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        
+        <section id="mood-tracker" class="section animated">
+            <h2>Mood & Symptom Tracker</h2>
+            <p>Track your mood and PCOS-related symptoms to identify patterns and get personalized recommendations.</p>
+            
+            <form action="/track_mood" method="post">
+                <div class="form-group">
+                    <label for="mood_level">Current Mood Level</label>
+                    <select id="mood_level" name="mood_level" required>
+                        <option value="">Select your mood</option>
+                        <option value="high">High (Anxious/Stressed/Irritable)</option>
+                        <option value="medium">Medium (Somewhat bothered)</option>
+                        <option value="low">Low (Calm/Content)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="pain_level">Pain Level</label>
+                    <select id="pain_level" name="pain_level" required>
+                        <option value="">Select pain level</option>
+                        <option value="none">No pain</option>
+                        <option value="low">Mild pain</option>
+                        <option value="medium">Moderate pain</option>
+                        <option value="high">Severe pain</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mood_notes">Notes (optional)</label>
+                    <textarea id="mood_notes" name="mood_notes" rows="3" placeholder="Describe your mood, any symptoms, or triggers"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-accent">Track Mood & Symptoms</button>
+            </form>
+            
+            {% if mood_message %}
+            <div class="result info-message">
+                <p>{{ mood_message }}</p>
+            </div>
+            {% endif %}
+            
+            {% if recommendations %}
+            <div class="recommendations">
+                <h3>Personalized Recommendations</h3>
+                <p>Based on your current mood and symptoms, you might find these helpful:</p>
+                <ul>
+                    {% for recommendation in recommendations %}
+                    <li>{{ recommendation }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div class="card" style="margin-top: 30px;">
+                <h3>Mood History</h3>
+                {% if session.mood_data %}
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Mood</th>
+                                <th>Pain</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in session.mood_data %}
+                            <tr>
+                                <td>{{ entry.date }}</td>
+                                <td>{{ entry.mood|capitalize }}</td>
+                                <td>{{ entry.pain|capitalize }}</td>
+                                <td>{{ entry.notes or '-' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p>No mood data recorded yet.</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>PCOS Companion &copy; 2023 | For educational purposes only | Consult a healthcare professional for medical advice</p>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
