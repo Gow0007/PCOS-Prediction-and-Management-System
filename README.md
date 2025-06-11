@@ -29,25 +29,24 @@ cd pcos-prediction
 
 2.Create virtual environment (optional)
 
-<pre><code>```python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate ```</code></pre>
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 3.Install dependencies
 
-<pre><code>``` pip install -r requirements.txt```</code></pre>
-
+pip install -r requirements.txt
 
 4.Run the application
 
-<pre><code>```bash python app.py ```</code></pre>
+python app.py
 
 5.Access the application
 
-<pre><code>```bash Open http://127.0.0.1:5000 in your browser ```</code></pre>
-
+Open http://127.0.0.1:5000 in your browser
 
 Project Structure
-<pre><code>```pcos-prediction/
+
+pcos-prediction/
 ├── static/            # CSS/JS files
 ├── templates/         # HTML templates
 ├── model.pkl          # Trained ML model
@@ -55,4 +54,14 @@ Project Structure
 ├── app.py             # Flask application
 ├── model.py           # Model training script
 ├── PCOS_data.csv      # Dataset
-└── requirements.txt ```</code></pre>
+└── requirements.txt   # Dependencies
+
+
+##Future Enhancements
+Add user authentication for personalized dashboards
+
+Implement data visualization charts for tracking history
+
+Expand recommendation engine with nutrition/supplement advice
+
+Deploy on cloud platform for public access
